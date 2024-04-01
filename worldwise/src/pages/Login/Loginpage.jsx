@@ -2,7 +2,10 @@ import styles from "./Login.module.css";
 import PageNav from "../../components/PageNav/PageNav";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 function Loginpage() {
+  const navigtor = useNavigate();
   const [email, setEmail] = useState("jack@example.com");
   const [password, setPassword] = useState("qwerty");
 
@@ -31,7 +34,14 @@ function Loginpage() {
         </div>
 
         <div>
-          <button>Login</button>
+          <button
+            className="cta"
+            onClick={() => {
+              navigtor("/app");
+            }}
+          >
+            Login
+          </button>
         </div>
       </form>
     </main>
