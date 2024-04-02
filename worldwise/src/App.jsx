@@ -2,7 +2,7 @@
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Homepage from "./pages/Home/Homepage";
 import Loginpage from "./pages/Login/Loginpage";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
@@ -13,6 +13,7 @@ import Cities from "./components/cities/Cities";
 import Countries from "./components/countries/Countries";
 import { useEffect, useState } from "react";
 import CityDetails from "./components/CityDetails/CityDetails";
+import Form from "./components/Form/Form";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -40,12 +41,7 @@ function App() {
           <Route path="app" element={<AppLayout></AppLayout>}>
             <Route
               index
-              element={
-                <Cities
-                  cityListData={cityListData}
-                  isloading={isloading}
-                ></Cities>
-              }
+              element={<Navigate replace to={"cities"}></Navigate>}
             ></Route>
             <Route
               path="cities"
@@ -64,6 +60,7 @@ function App() {
               path="countries"
               element={<Countries cityListData={cityListData}></Countries>}
             ></Route>
+            <Route path="form" element={<Form></Form>}></Route>
           </Route>
 
           <Route path="login" element={<Loginpage></Loginpage>}></Route>
