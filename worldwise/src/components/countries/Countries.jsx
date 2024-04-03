@@ -1,6 +1,8 @@
 import CountryItem from "../CountryItem/CountryItem";
 import styles from "./CountryList.module.css";
-function Countries({ cityListData }) {
+import { useCity } from "../../context/cityContext";
+function Countries() {
+  const { cityListData } = useCity();
   const uniqueCountries = cityListData.reduce((arr, city) => {
     if (!arr.includes(city.country)) {
       console.log(city.country);
