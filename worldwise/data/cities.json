@@ -25,18 +25,6 @@
       "id": "17806751"
     },
     {
-      "cityName": "Berlin",
-      "country": "Germany",
-      "emoji": "🏳",
-      "date": "2027-02-12T09:24:11.863Z",
-      "notes": "Amazing 😃",
-      "position": {
-        "lat": 52.53586782505711,
-        "lng": 13.376933665713324
-      },
-      "id": "98443197"
-    },
-    {
       "id": "2348",
       "cityName": "Carlton",
       "country": "United Kingdom of Great Britain and Northern Ireland (the)",
@@ -61,15 +49,15 @@
       }
     },
     {
-      "id": "5a8a",
-      "cityName": "Riencourt-les-Cagnicourt",
-      "country": "France",
-      "emoji": "🇫🇷",
+      "id": "87ab",
+      "cityName": "Belmontejo",
+      "country": "Spain",
+      "emoji": "🇪🇸",
       "notes": "",
-      "date": "2027-10-31T15:59:59.138Z",
+      "date": "2024-04-04T21:04:57.548Z",
       "position": {
-        "lat": "50.20196277348347",
-        "lng": "2.962208692682156"
+        "lat": "39.83844709592744",
+        "lng": "-2.2872463956424243"
       }
     }
   ]

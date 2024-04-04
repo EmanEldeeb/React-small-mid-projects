@@ -1,36 +1,73 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 export const cityContext = createContext();
-
+const initialCity = {
+  cityListData: [],
+  isloading: false,
+  currentCity: {},
+};
+function Reducer(state, action) {
+  switch (action.type) {
+    case "loading":
+      return { ...state, isloading: true };
+    case "cities/fetching":
+      return { ...state, cityListData: action.payload, isloading: false };
+    case "city/getcurrentone":
+      return {
+        ...state,
+        currentCity: action.payload,
+        isloading: false,
+      };
+    case "city/addnewone":
+      return {
+        ...state,
+        cityListData: [...state.cityListData, action.payload],
+        isloading: false,
+        currentCity: action.payload,
+      };
+    case "city/delete":
+      return {
+        ...state,
+        cityListData: state.cityListData.filter(
+          (city) => city.id !== action.payload
+        ),
+        isloading: false,
+      };
+    default:
+      throw new Error("undefined action");
+  }
+}
 export function CityProvider({ children }) {
   // const [count, setCount] = useState(0);
-  const [cityListData, setcityListData] = useState([]);
-  const [isloading, setIsloding] = useState(false);
-  const [currentCity, setcurrentcity] = useState({});
+  // const [cityListData, setcityListData] = useState([]);
+  // const [isloading, setIsloding] = useState(false);
+  // const [currentCity, setcurrentcity] = useState({});
+  const [{ cityListData, isloading, currentCity }, dispatch] = useReducer(
+    Reducer,
+    initialCity
+  );
 
   useEffect(() => {
-    setIsloding(true);
+    dispatch({ type: "loading" });
     fetch("http://localhost:1000/cities")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setcityListData(data);
-        setIsloding(false);
+        dispatch({ type: "cities/fetching", payload: data });
       });
   }, []);
 
   function getCurrentcity(id) {
-    setIsloding(true);
+    dispatch({ type: "loading" });
     fetch(`http://localhost:1000/cities/${id}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setcurrentcity(data);
-        setIsloding(false);
+        dispatch({ type: "city/getcurrentone", payload: data });
       });
   }
   function addNewCity(newcity) {
-    setIsloding(true);
+    dispatch({ type: "loading" });
     fetch(`http://localhost:1000/cities`, {
       method: "POST",
       body: JSON.stringify(newcity),
@@ -40,20 +77,17 @@ export function CityProvider({ children }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        setcityListData((cities) => [...cities, newcity]);
-        setIsloding(false);
+        dispatch({ type: "city/addnewone", payload: data });
       });
   }
   function deleteCity(id) {
-    setIsloding(true);
+    dispatch({ type: "loading" });
     fetch(`http://localhost:1000/cities/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
       .then(() => {
-        setcityListData((cities) => cities.filter((city) => city.id !== id));
-        setIsloding(false);
+        dispatch({ type: "city/delete", payload: id });
       });
   }
 
