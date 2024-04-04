@@ -29,10 +29,32 @@ export function CityProvider({ children }) {
         setIsloding(false);
       });
   }
+  function addNewCity(newcity) {
+    setIsloding(true);
+    fetch(`http://localhost:1000/cities`, {
+      method: "POST",
+      body: JSON.stringify(newcity),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setcityListData((cities) => [...cities, newcity]);
+        setIsloding(false);
+      });
+  }
 
   return (
     <cityContext.Provider
-      value={{ cityListData, isloading, getCurrentcity, currentCity }}
+      value={{
+        cityListData,
+        isloading,
+        getCurrentcity,
+        currentCity,
+        addNewCity,
+      }}
     >
       {children}
     </cityContext.Provider>

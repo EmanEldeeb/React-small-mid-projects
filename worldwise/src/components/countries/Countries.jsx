@@ -4,10 +4,12 @@ import { useCity } from "../../context/cityContext";
 function Countries() {
   const { cityListData } = useCity();
   const uniqueCountries = cityListData.reduce((arr, city) => {
-    if (!arr.includes(city.country)) {
-      console.log(city.country);
+    console.log("arr", arr, city.country);
+    if (arr.findIndex((item) => item.country === city.country) === -1) {
+      console.log("u", city.country);
       return [...arr, { country: city.country, emoji: city.emoji }];
     }
+    return arr;
   }, []);
   return (
     <ul className={styles.countryList}>
