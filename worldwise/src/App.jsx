@@ -11,64 +11,48 @@ import Product from "./pages/Product/Product";
 import AppLayout from "./pages/AppLayout/AppLayout";
 import Cities from "./components/cities/Cities";
 import Countries from "./components/countries/Countries";
-import { useEffect, useState } from "react";
 import CityDetails from "./components/CityDetails/CityDetails";
 import Form from "./components/Form/Form";
+import { CityProvider } from "./context/cityContext";
 
 function App() {
-  // const [count, setCount] = useState(0);
-  const [cityListData, setcityListData] = useState([]);
-  const [isloading, setIsloding] = useState(false);
-
-  useEffect(() => {
-    setIsloding(true);
-    fetch("http://localhost:1000/cities")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setcityListData(data);
-        setIsloding(false);
-      });
-  }, []);
-
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Homepage></Homepage>}></Route>
-          <Route path="/" element={<Homepage></Homepage>}></Route>
-          <Route path="home" element={<Homepage></Homepage>}></Route>
-          <Route path="app" element={<AppLayout></AppLayout>}>
-            <Route
-              index
-              element={<Navigate replace to={"cities"}></Navigate>}
-            ></Route>
-            <Route
-              path="cities"
-              element={
-                <Cities
-                  cityListData={cityListData}
-                  isloading={isloading}
-                ></Cities>
-              }
-            ></Route>
-            <Route
-              path="cities/:id"
-              element={<CityDetails></CityDetails>}
-            ></Route>
-            <Route
-              path="countries"
-              element={<Countries cityListData={cityListData}></Countries>}
-            ></Route>
-            <Route path="form" element={<Form></Form>}></Route>
-          </Route>
+      <CityProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<Homepage></Homepage>}></Route>
+            <Route path="/" element={<Homepage></Homepage>}></Route>
+            <Route path="home" element={<Homepage></Homepage>}></Route>
+            <Route path="app" element={<AppLayout></AppLayout>}>
+              <Route
+                index
+                element={<Navigate replace to={"cities"}></Navigate>}
+              ></Route>
+              <Route
+                path="cities"
+                element={
+                  <Cities
+                  // cityListData={cityListData}
+                  // isloading={isloading}
+                  ></Cities>
+                }
+              ></Route>
+              <Route
+                path="cities/:id"
+                element={<CityDetails></CityDetails>}
+              ></Route>
+              <Route path="countries" element={<Countries></Countries>}></Route>
+              <Route path="form" element={<Form></Form>}></Route>
+            </Route>
 
-          <Route path="login" element={<Loginpage></Loginpage>}></Route>
-          <Route path="pricing" element={<Pricing></Pricing>}></Route>
-          <Route path="Product" element={<Product></Product>}></Route>
-          <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
-        </Routes>
-      </BrowserRouter>
+            <Route path="login" element={<Loginpage></Loginpage>}></Route>
+            <Route path="pricing" element={<Pricing></Pricing>}></Route>
+            <Route path="Product" element={<Product></Product>}></Route>
+            <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
+          </Routes>
+        </BrowserRouter>
+      </CityProvider>
     </>
   );
 }
