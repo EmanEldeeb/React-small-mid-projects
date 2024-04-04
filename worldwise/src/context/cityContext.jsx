@@ -45,6 +45,17 @@ export function CityProvider({ children }) {
         setIsloding(false);
       });
   }
+  function deleteCity(id) {
+    setIsloding(true);
+    fetch(`http://localhost:1000/cities/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setcityListData((cities) => cities.filter((city) => city.id !== id));
+        setIsloding(false);
+      });
+  }
 
   return (
     <cityContext.Provider
@@ -54,6 +65,7 @@ export function CityProvider({ children }) {
         getCurrentcity,
         currentCity,
         addNewCity,
+        deleteCity,
       }}
     >
       {children}

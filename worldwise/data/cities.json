@@ -49,18 +49,6 @@
       }
     },
     {
-      "id": "e5bf",
-      "cityName": "Le Malesherbois",
-      "country": "France",
-      "emoji": "🇫🇷",
-      "notes": "",
-      "date": "2027-10-31T15:59:59.138Z",
-      "position": {
-        "lat": "48.26789508446479",
-        "lng": "2.3230454994847705"
-      }
-    },
-    {
       "id": "b829",
       "cityName": "Bazuel",
       "country": "France",
@@ -82,42 +70,6 @@
       "position": {
         "lat": "50.20196277348347",
         "lng": "2.962208692682156"
-      }
-    },
-    {
-      "id": "1d11",
-      "cityName": "la Torre de Cabdella",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "notes": "",
-      "date": "2024-04-05T05:41:28.000Z",
-      "position": {
-        "lat": "42.34002248326795",
-        "lng": "0.9387949524737583"
-      }
-    },
-    {
-      "id": "2b6f",
-      "cityName": "Loury",
-      "country": "France",
-      "emoji": "🇫🇷",
-      "notes": "test",
-      "date": "2024-04-12T05:43:17.000Z",
-      "position": {
-        "lat": "48.01591214819439",
-        "lng": "2.1486576799130535"
-      }
-    },
-    {
-      "id": "5bc9",
-      "cityName": "Esqueheries",
-      "country": "France",
-      "emoji": "🇫🇷",
-      "notes": "",
-      "date": "2024-04-04T05:43:51.026Z",
-      "position": {
-        "lat": "49.975108499730574",
-        "lng": "3.7505446437816223"
       }
     }
   ]
