@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./User.module.css";
-import { UseAuth } from "../src/context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
 
 const FAKE_USER = {
   name: "Eman",
