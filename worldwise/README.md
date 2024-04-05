@@ -1,3 +1,12 @@
+
+# notes
+1-to make your nested route active without clicking directy on it
+use <Route index element={<Navigate replace to={"cities"}>}>
+instead of <Route index element={}>
+2-go back with const navigate=useNavigate() navigate(-1)
+
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
