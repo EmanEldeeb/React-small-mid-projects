@@ -1,9 +1,9 @@
 
 # notes
-1-to make your nested route active without clicking directy on it
-use <Route index element={<Navigate replace to={"cities"}>}>
-instead of <Route index element={}>
-2-go back with const navigate=useNavigate() navigate(-1)
+1-to make your nested route active without clicking directy on it   
+use <Route index element={<Navigate replace to={"cities"}>}>     
+instead of <Route index element={}>     
+2-go back with const navigate=useNavigate() navigate(-1)     
 
 
 
