@@ -14,44 +14,58 @@ import Countries from "./components/countries/Countries";
 import CityDetails from "./components/CityDetails/CityDetails";
 import Form from "./components/Form/Form";
 import { CityProvider } from "./context/cityContext";
+import { Authprovider } from "./context/AuthContext";
+import Routeprotection from "./pages/Routeprotection/Routeprotection";
 
 function App() {
   return (
     <>
       <CityProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route index element={<Homepage></Homepage>}></Route>
-            <Route path="/" element={<Homepage></Homepage>}></Route>
-            <Route path="home" element={<Homepage></Homepage>}></Route>
-            <Route path="app" element={<AppLayout></AppLayout>}>
+        <Authprovider>
+          <BrowserRouter>
+            <Routes>
+              <Route index element={<Homepage></Homepage>}></Route>
+              <Route path="/" element={<Homepage></Homepage>}></Route>
+              <Route path="home" element={<Homepage></Homepage>}></Route>
               <Route
-                index
-                element={<Navigate replace to={"cities"}></Navigate>}
-              ></Route>
-              <Route
-                path="cities"
+                path="app"
                 element={
-                  <Cities
-                  // cityListData={cityListData}
-                  // isloading={isloading}
-                  ></Cities>
+                  <Routeprotection>
+                    <AppLayout></AppLayout>
+                  </Routeprotection>
                 }
-              ></Route>
-              <Route
-                path="cities/:id"
-                element={<CityDetails></CityDetails>}
-              ></Route>
-              <Route path="countries" element={<Countries></Countries>}></Route>
-              <Route path="form" element={<Form></Form>}></Route>
-            </Route>
+              >
+                <Route
+                  index
+                  element={<Navigate replace to={"cities"}></Navigate>}
+                ></Route>
+                <Route
+                  path="cities"
+                  element={
+                    <Cities
+                    // cityListData={cityListData}
+                    // isloading={isloading}
+                    ></Cities>
+                  }
+                ></Route>
+                <Route
+                  path="cities/:id"
+                  element={<CityDetails></CityDetails>}
+                ></Route>
+                <Route
+                  path="countries"
+                  element={<Countries></Countries>}
+                ></Route>
+                <Route path="form" element={<Form></Form>}></Route>
+              </Route>
 
-            <Route path="login" element={<Loginpage></Loginpage>}></Route>
-            <Route path="pricing" element={<Pricing></Pricing>}></Route>
-            <Route path="Product" element={<Product></Product>}></Route>
-            <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
-          </Routes>
-        </BrowserRouter>
+              <Route path="login" element={<Loginpage></Loginpage>}></Route>
+              <Route path="pricing" element={<Pricing></Pricing>}></Route>
+              <Route path="Product" element={<Product></Product>}></Route>
+              <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
+            </Routes>
+          </BrowserRouter>
+        </Authprovider>
       </CityProvider>
     </>
   );

@@ -1,18 +1,27 @@
 import styles from "./Login.module.css";
 import PageNav from "../../components/PageNav/PageNav";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UseAuth } from "../../context/AuthContext";
 
 function Loginpage() {
   const navigtor = useNavigate();
-  const [email, setEmail] = useState("jack@example.com");
-  const [password, setPassword] = useState("qwerty");
-
+  const [email, setEmail] = useState("eman@gmail.com");
+  const [password, setPassword] = useState("123456");
+  const { login, isLogged } = UseAuth();
+  function handlelogin(e) {
+    e.preventDefault();
+    login(email, password);
+  }
+  useEffect(() => {
+    console.log("eman");
+    if (isLogged) navigtor("/app");
+  }, [isLogged]);
   return (
     <main className={styles.login}>
       <PageNav></PageNav>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handlelogin}>
         <div className={styles.row}>
           <label htmlFor="email">Email address</label>
           <input
@@ -34,14 +43,7 @@ function Loginpage() {
         </div>
 
         <div>
-          <button
-            className="cta"
-            onClick={() => {
-              navigtor("/app");
-            }}
-          >
-            Login
-          </button>
+          <button className="cta">Login</button>
         </div>
       </form>
     </main>
