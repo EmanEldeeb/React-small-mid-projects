@@ -21,7 +21,8 @@ function CityDetails() {
   const { getCurrentcity, currentCity, isloading } = useCity();
   useEffect(() => {
     getCurrentcity(id);
-  }, [id]);
+  }, [id, getCurrentcity]);
+
   if (isloading) return <Spinner></Spinner>;
   return (
     <div className={styles.city}>

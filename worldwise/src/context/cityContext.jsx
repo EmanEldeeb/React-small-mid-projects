@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 
 export const cityContext = createContext();
 const initialCity = {
@@ -57,15 +63,20 @@ export function CityProvider({ children }) {
       });
   }, []);
 
-  function getCurrentcity(id) {
-    dispatch({ type: "loading" });
-    fetch(`http://localhost:1000/cities/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        dispatch({ type: "city/getcurrentone", payload: data });
-      });
-  }
+  const getCurrentcity = useCallback(
+    function getCurrentcity(id) {
+      if (id === currentCity.id) return;
+      dispatch({ type: "loading" });
+      fetch(`http://localhost:1000/cities/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          dispatch({ type: "city/getcurrentone", payload: data });
+        });
+    },
+    [currentCity.id]
+  );
+
   function addNewCity(newcity) {
     dispatch({ type: "loading" });
     fetch(`http://localhost:1000/cities`, {
