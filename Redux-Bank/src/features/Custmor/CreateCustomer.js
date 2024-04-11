@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { actionCreateUser } from "./customrSlice";
+import { createUser } from "./customrSlice"; // Update the import statement to import from the correct file
+
 function Customer() {
   const [fullName, setFullName] = useState("");
   const [nationalId, setNationalId] = useState("");
   const dispatch = useDispatch();
   function handleClick() {
-    dispatch(actionCreateUser(fullName, nationalId));
+    dispatch(createUser(fullName, nationalId));
     setFullName("");
     setNationalId("");
   }

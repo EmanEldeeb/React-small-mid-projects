@@ -6,9 +6,10 @@ import Numresult from "./components/Navbar/Numresult";
 import Box from "./components/MainLayout/Box";
 import Summary from "./components/MainLayout/Summary";
 import WatchedList from "./components/MainLayout/WatchedList";
-import MovieList from "./components/MainLayout/MovieList";
+import MovieList from "./components/MovieList-c/MovieList";
 import Loader from "./components/Loader/Loader";
 import ErrorMessage from "./components/ErrorMessages/ErrorMessage";
+import MovieDetails from "./components/MovieDetails/MovieDetails";
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -61,6 +62,11 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [isLoading, setIsloading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
+
+  function handleCloseMovieDetails() {
+    setSelectedMovieId(null);
+  }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -69,7 +75,8 @@ export default function App() {
         setIsloading(true);
         setErrorMessage("");
         const res = await fetch(
-          `http://www.omdbapi.com/?i=tt3896198&apikey=418f0745&s=${query}`,
+          `https://www.omdbapi.com/?i=tt3896198&apikey=418f0745&s=${query}`,
+
           { signal: controller.signal }
         );
         if (!res.ok) {
@@ -99,7 +106,11 @@ export default function App() {
   return (
     <>
       <Navbar>
-        <Search query={query} setQuery={setQuery}></Search>
+        <Search
+          query={query}
+          setQuery={setQuery}
+          handleCloseMovieDetails={handleCloseMovieDetails}
+        ></Search>
         <Numresult movies={movies}></Numresult>
       </Navbar>
       <Main>
@@ -109,12 +120,24 @@ export default function App() {
             <ErrorMessage>{errorMessage}</ErrorMessage>
           )}
           {!isLoading && !errorMessage && (
-            <MovieList movies={movies}></MovieList>
+            <MovieList
+              movies={movies}
+              setSelectedMovieId={setSelectedMovieId}
+            ></MovieList>
           )}
         </Box>
         <Box>
-          <Summary watched={watched}></Summary>
-          <WatchedList watched={watched}></WatchedList>
+          {selectedMovieId ? (
+            <MovieDetails
+              selectedMovieId={selectedMovieId}
+              handleCloseMovieDetails={handleCloseMovieDetails}
+            ></MovieDetails>
+          ) : (
+            <>
+              <Summary watched={watched}></Summary>
+              <WatchedList watched={watched}></WatchedList>
+            </>
+          )}
         </Box>
       </Main>
     </>
