@@ -58,7 +58,9 @@ const tempWatchedData = [
 ];
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [watched, setWatched] = useState(
+    () => JSON.parse(localStorage.getItem("_watchedMovies")) || []
+  );
   const [query, setQuery] = useState("");
   const [isLoading, setIsloading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -66,6 +68,17 @@ export default function App() {
 
   function handleCloseMovieDetails() {
     setSelectedMovieId(null);
+  }
+
+  function handleAddToWatched(newMovie) {
+    setWatched((movies) => [...movies, newMovie]);
+    localStorage.setItem(
+      "_watchedMovies",
+      JSON.stringify([...watched, newMovie])
+    );
+  }
+  function handleRemoveWatched(imdbID) {
+    setWatched((movies) => movies.filter((mov) => mov.imdbID !== imdbID));
   }
 
   useEffect(() => {
@@ -131,11 +144,16 @@ export default function App() {
             <MovieDetails
               selectedMovieId={selectedMovieId}
               handleCloseMovieDetails={handleCloseMovieDetails}
+              handleAddToWatched={handleAddToWatched}
+              watched={watched}
             ></MovieDetails>
           ) : (
             <>
               <Summary watched={watched}></Summary>
-              <WatchedList watched={watched}></WatchedList>
+              <WatchedList
+                watched={watched}
+                handleRemoveWatched={handleRemoveWatched}
+              ></WatchedList>
             </>
           )}
         </Box>
