@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessages/ErrorMessage";
+import Rate from "../Rating/Rate";
 
 function MovieDetails({ selectedMovieId, handleCloseMovieDetails }) {
   const [currentMovie, setcurrentMovie] = useState("");
   const [isLoading, setIsloading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [starRating, setStarRating] = useState(0);
 
   const {
     Genre: genre,
@@ -70,6 +72,12 @@ function MovieDetails({ selectedMovieId, handleCloseMovieDetails }) {
             </div>
           </header>
           <section>
+            <div className="rating">
+              <Rate maxRating={10} getRating={setStarRating}></Rate>
+              {starRating > 0 && (
+                <button className="btn-add btn">+ Add to watched list</button>
+              )}
+            </div>
             <p>
               <em>{plot}</em>
             </p>
