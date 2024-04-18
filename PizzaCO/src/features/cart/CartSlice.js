@@ -13,21 +13,22 @@ const cartSlice = createSlice({
     },
     deleteCartItem(state, action) {
       state.cartItems = state.cartItems.filter(
-        (item) => item.id !== action.payload
+        (item) => item.pizzaId !== action.payload
       );
     },
     increaseQuantity(state, action) {
-      console.log('emans');
-      const item = state.cartItems.find((item) => item.id === action.payload);
-      console.log(item);
+      const item = state.cartItems.find(
+        (item) => item.pizzaId === action.payload
+      );
       if (item) {
         item.quantity++;
         item.totalPrice = item.quantity * item.unitPrice;
       }
     },
     decreaseQuantity(state, action) {
-      const item = state.cartItems.find((item) => item.id === action.payload);
-      console.log(item.quantity);
+      const item = state.cartItems.find(
+        (item) => item.pizzaId === action.payload
+      );
       if (item.quantity === 1)
         cartSlice.caseReducers.deleteCartItem(state, action);
       if (item) {
@@ -52,13 +53,15 @@ export const {
 } = cartSlice.actions;
 
 export const getCurrentQuantity = (id) => (store) => {
-  const item = store.cart.cartItems.find((item) => item.id === id);
+  const item = store.cart.cartItems.find((item) => item.pizzaId === id);
   if (item) return item.quantity;
   else return null;
 };
 export const getCurrentPrice = (id) => (store) => {
-  const item = store.cart.cartItems.find((item) => item.id === id);
-  console.log(item.totalPrice);
+  const item = store.cart.cartItems.find((item) => item.pizzaId === id);
   if (item) return item.totalPrice;
   else return null;
 };
+
+export const getTotalPrice = (store) =>
+  store.cart.cartItems.reduce((sum, curitem) => sum + curitem.totalPrice, 0);

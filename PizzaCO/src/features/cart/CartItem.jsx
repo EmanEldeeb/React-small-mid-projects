@@ -10,11 +10,10 @@ import {
 import Button from '../../ui/Button';
 
 function CartItem({ item }) {
-  const { id, name } = item;
-  const currentQuantity = useSelector(getCurrentQuantity(id));
-  const currentPrice = useSelector(getCurrentPrice(id));
+  const { pizzaId, name } = item;
+  const currentQuantity = useSelector(getCurrentQuantity(pizzaId));
+  const currentPrice = useSelector(getCurrentPrice(pizzaId));
   const dispatch = useDispatch();
-  console.log(currentPrice);
 
   return (
     <li className="py-3 sm:flex sm:items-center sm:justify-between">
@@ -28,17 +27,19 @@ function CartItem({ item }) {
           <Button
             type="rounded"
             onclick={() => {
-              console.log('test', id);
-              dispatch(increaseQuantity(id));
+              dispatch(increaseQuantity(pizzaId));
             }}
           >
             +
           </Button>
           <span>{currentQuantity}</span>
-          <Button type="rounded" onclick={() => dispatch(decreaseQuantity(id))}>
+          <Button
+            type="rounded"
+            onclick={() => dispatch(decreaseQuantity(pizzaId))}
+          >
             -
           </Button>
-          <Deletebtn id={id}></Deletebtn>
+          <Deletebtn id={pizzaId}></Deletebtn>
         </div>
       </div>
     </li>

@@ -15,7 +15,7 @@ function MenuItem({ pizza }) {
   const currentQuantity = useSelector(getCurrentQuantity(id));
   function handleAddTOCart() {
     const cartitem = {
-      id,
+      pizzaId: id,
       name,
       unitPrice,
       quantity: 1,
@@ -57,7 +57,6 @@ function MenuItem({ pizza }) {
                 <Button
                   type="rounded"
                   onclick={() => {
-                    console.log('test', id);
                     dispatch(increaseQuantity(id));
                   }}
                 >
