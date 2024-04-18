@@ -2,15 +2,19 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../../ui/Button';
 import { createUser } from '../../redux/UserSlice';
+import { useNavigate } from 'react-router-dom';
 
 function CreateUser() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
+  const { userName: userNameGlobal } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   function handleSubmit(e) {
     e.preventDefault();
     if (!username) return;
     dispatch(createUser(username));
     setUsername('');
+    navigate('/menu');
   }
 
   return (
@@ -19,7 +23,7 @@ function CreateUser() {
         👋 Welcome! Please start by telling us your name:
       </p>
 
-      {username ? (
+      {!userNameGlobal ? (
         <>
           <input
             type="text"

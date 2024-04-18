@@ -1,8 +1,28 @@
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../ui/Button';
 import { formatCurrency } from '../../utils/helpers';
+import {
+  addToCart,
+  decreaseQuantity,
+  getCurrentQuantity,
+  increaseQuantity,
+} from '../cart/CartSlice';
+import Deletebtn from '../cart/Deletebtn';
 
 function MenuItem({ pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const dispatch = useDispatch();
+  const currentQuantity = useSelector(getCurrentQuantity(id));
+  function handleAddTOCart() {
+    const cartitem = {
+      id,
+      name,
+      unitPrice,
+      quantity: 1,
+      totalPrice: unitPrice,
+    };
+    dispatch(addToCart(cartitem));
+  }
 
   return (
     <li className="flex gap-4 py-2">
@@ -25,7 +45,37 @@ function MenuItem({ pizza }) {
             </p>
           )}
 
-          <Button type="small">Add to cart</Button>
+          {!soldOut ? (
+            !currentQuantity ? (
+              <Button type="small" onclick={handleAddTOCart}>
+                Add to cart
+              </Button>
+            ) : (
+              <div
+                style={{ display: 'flex', gap: '3px', alignItems: 'center' }}
+              >
+                <Button
+                  type="rounded"
+                  onclick={() => {
+                    console.log('test', id);
+                    dispatch(increaseQuantity(id));
+                  }}
+                >
+                  +
+                </Button>
+                <span>{currentQuantity}</span>
+                <Button
+                  type="rounded"
+                  onclick={() => dispatch(decreaseQuantity(id))}
+                >
+                  -
+                </Button>
+                <Deletebtn id={id}></Deletebtn>
+              </div>
+            )
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </li>
